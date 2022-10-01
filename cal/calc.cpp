@@ -80,5 +80,6 @@ double calc::ctg(double x)
 void calc::test()
 {
     using namespace calc;
-    //����� ������ �����
+	//Тесты писать сюда
+	//Обратить внимание на макросы test1to1err и test2to1err в testmacros.h
 }
