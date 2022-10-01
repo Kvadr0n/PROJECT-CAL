@@ -55,7 +55,8 @@ int main()
 	siaod::test();
 	num::test();
 	parsetest();
-
+	parsetest();
 	system("pause");
 	return(0);
 }
+//
