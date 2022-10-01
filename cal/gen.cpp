@@ -53,5 +53,6 @@ std::string bin(double x)
 void gen::test()
 {
 	using namespace gen;
-	//����� ������ �����
+	//Тесты писать сюда
+	//Обратить внимание на макросы test1to1, test2to1 и test1to1str в testmacros.h
 }
