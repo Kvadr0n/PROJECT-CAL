@@ -140,6 +140,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cal.cpp" />
+    <ClCompile Include="calc.cpp" />
+    <ClCompile Include="gen.cpp" />
+    <ClCompile Include="num.cpp" />
+    <ClCompile Include="siaod.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="calc.h" />
+    <ClInclude Include="gen.h" />
+    <ClInclude Include="num.h" />
+    <ClInclude Include="siaod.h" />
+    <ClInclude Include="testmacros.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
