@@ -23,5 +23,6 @@ double num::integrate(double a, double b)
 void num::test()
 {
     using namespace num;
-    //����� ������ �����
+    //Тесты писать сюда
+	//Обратить внимание на макросы test1to1errfunc и test2to1errfunc в testmacros.h
 }
