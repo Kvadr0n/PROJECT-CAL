@@ -45,15 +45,23 @@ double gen::ipow(double x, short a)
 	return 0.0;
 }
 
-std::string bin(double x)
+std::string gen::bin(double x)
 {
-
-	return;
+	char res[67];
+	res[0] = '0';
+	res[1] = 'b';
+	res[66] = 0;
+	unsigned long long num = (unsigned long long&)x;
+	for (char i = 2; i < 66; ++i)
+	{
+		res[i] = char(num >= 0x8000000000000000) + 48;
+		num <<= 1;
+	}
+	return((const char*)res);
 }
 
 void gen::test()
 {
-	using namespace gen;
 	//АНДРЕЙ - ТЕСТ БИНАРНЫХ СТРОК
 	test1to1str(bin, ARR(0, 1, 1.25, -2), ARR
 		(
