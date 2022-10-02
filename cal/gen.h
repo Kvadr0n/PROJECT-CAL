@@ -22,6 +22,7 @@ namespace gen
 	double mant(double x);
 	double ceil(double x);
 	double round(double x);
+	short order(double x);
 	double ipow(double x, short a);
 	std::string bin(double x);
 }
