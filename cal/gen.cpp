@@ -51,7 +51,7 @@ std::string gen::bin(double x)
 	res[0] = '0';
 	res[1] = 'b';
 	res[66] = 0;
-	unsigned long long num = (unsigned long long&)x;
+	unsigned long long& num = (unsigned long long&)x;
 	for (char i = 2; i < 66; ++i)
 	{
 		res[i] = char(num >= 0x8000000000000000) + 48;
