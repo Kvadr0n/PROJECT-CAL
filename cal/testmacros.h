@@ -3,12 +3,12 @@
 #include <iostream>
 #include <exception>
 
-//Œ·Ó‡˜Ë‚‡ÂÚ Ï‡ÒÒË‚ ‰Îˇ ÔÓ‰‡˜Ë ‚ ÚÂÒÚËÛ˛˘ËÈ Ï‡ÍÓÒ. Õ‡ÔËÏÂ:
+//–û–±–æ—Ä–∞—á–∏–≤–∞–µ—Ç –º–∞—Å—Å–∏–≤ –¥–ª—è –ø–æ–¥–∞—á–∏ –≤ —Ç–µ—Å—Ç–∏—Ä—É—é—â–∏–π –º–∞–∫—Ä–æ—Å. –ù–∞–ø—Ä–∏–º–µ—Ä:
 //AR(1.0, 2.5, 3.25) = {1.0, 2.5, 3.25}
 //AR("amogus2", "baza") = {"amogus2", "baza"}
 #define ARR(...) {__VA_ARGS__}
 
-//“ÂÒÚËÛÂÚ ÙÛÌÍˆËË double->double
+//–¢–µ—Å—Ç–∏—Ä—É–µ—Ç —Ñ—É–Ω–∫—Ü–∏–∏ double->double
 #define test1to1(function, input1, expected) \
 { \
 	double in1[] = input1; \
@@ -26,7 +26,7 @@
 	} \
 	std::cout << '\n'; \
 }
-//“ÂÒÚËÛÂÚ ÙÛÌÍˆËË double+double->double
+//–¢–µ—Å—Ç–∏—Ä—É–µ—Ç —Ñ—É–Ω–∫—Ü–∏–∏ double+double->double
 #define test2to1(function, input1, input2, expected) \
 { \
 	double in1[] = input1; \
@@ -45,7 +45,7 @@
 	} \
 	std::cout << '\n'; \
 }
-//“ÂÒÚËÛÂÚ ÙÛÌÍˆËË double->string
+//–¢–µ—Å—Ç–∏—Ä—É–µ—Ç —Ñ—É–Ω–∫—Ü–∏–∏ double->string
 #define test1to1str(function, input1, expected) \
 { \
 	double in1[] = input1; \
@@ -63,7 +63,7 @@
 	} \
 	std::cout << '\n'; \
 }
-//“ÂÒÚËÛÂÚ ÙÛÌÍˆËË double->double Ò ÛÍ‡Á‡ÌÌÓÈ ÔÓ„Â¯ÌÓÒÚ¸˛
+//–¢–µ—Å—Ç–∏—Ä—É–µ—Ç —Ñ—É–Ω–∫—Ü–∏–∏ double->double —Å —É–∫–∞–∑–∞–Ω–Ω–æ–π –ø–æ–≥—Ä–µ—à–Ω–æ—Å—Ç—å—é
 #define test1to1err(function, input1, expected, error) \
 { \
 	double in1[] = input1; \
@@ -81,7 +81,7 @@
 	} \
 	std::cout << '\n'; \
 }
-//“ÂÒÚËÛÂÚ ÙÛÌÍˆËË double+double->double Ò ÛÍ‡Á‡ÌÌÓÈ ÔÓ„Â¯ÌÓÒÚ¸˛
+//–¢–µ—Å—Ç–∏—Ä—É–µ—Ç —Ñ—É–Ω–∫—Ü–∏–∏ double+double->double —Å —É–∫–∞–∑–∞–Ω–Ω–æ–π –ø–æ–≥—Ä–µ—à–Ω–æ—Å—Ç—å—é
 #define test2to1err(function, input1, input2, expected, error) \
 { \
 	double in1[] = input1; \
@@ -100,7 +100,7 @@
 	} \
 	std::cout << '\n'; \
 }
-//“ÂÒÚËÛÂÚ ÙÛÌÍˆËË string->double
+//–¢–µ—Å—Ç–∏—Ä—É–µ—Ç —Ñ—É–Ω–∫—Ü–∏–∏ string->double
 #define test1strto1(function, input1, expected) \
 { \
 	std::string in1[] = input1; \
@@ -118,7 +118,7 @@
 	} \
 	std::cout << '\n'; \
 }
-//“ÂÒÚËÛÂÚ ÙÛÌÍˆËË double->double Ò ÛÍ‡Á‡ÌÌÓÈ ÔÓ„Â¯ÌÓÒÚ¸˛, ÚÂ·Û˛˘ËÂ Á‡‰‡ÌËˇ ÙÛÌÍˆËË ‚ ‚Ë‰Â Û‡‚ÌÂÌËˇ
+//–¢–µ—Å—Ç–∏—Ä—É–µ—Ç —Ñ—É–Ω–∫—Ü–∏–∏ double->double —Å —É–∫–∞–∑–∞–Ω–Ω–æ–π –ø–æ–≥—Ä–µ—à–Ω–æ—Å—Ç—å—é, —Ç—Ä–µ–±—É—é—â–∏–µ –∑–∞–¥–∞–Ω–∏—è —Ñ—É–Ω–∫—Ü–∏–∏ –≤ –≤–∏–¥–µ —É—Ä–∞–≤–Ω–µ–Ω–∏—è
 #define test1to1errfunc(function, funcs, input1, expected, error) \
 { \
 	std::string fs[] = funcs; \
@@ -138,7 +138,7 @@
 	} \
 	std::cout << '\n'; \
 }
-//“ÂÒÚËÛÂÚ ÙÛÌÍˆËË double+double->double Ò ÛÍ‡Á‡ÌÌÓÈ ÔÓ„Â¯ÌÓÒÚ¸˛, ÚÂ·Û˛˘ËÂ Á‡‰‡ÌËˇ ÙÛÌÍˆËË ‚ ‚Ë‰Â Û‡‚ÌÂÌËˇ
+//–¢–µ—Å—Ç–∏—Ä—É–µ—Ç —Ñ—É–Ω–∫—Ü–∏–∏ double+double->double —Å —É–∫–∞–∑–∞–Ω–Ω–æ–π –ø–æ–≥—Ä–µ—à–Ω–æ—Å—Ç—å—é, —Ç—Ä–µ–±—É—é—â–∏–µ –∑–∞–¥–∞–Ω–∏—è —Ñ—É–Ω–∫—Ü–∏–∏ –≤ –≤–∏–¥–µ —É—Ä–∞–≤–Ω–µ–Ω–∏—è
 #define test2to1errfunc(function, funcs, input1, input2, expected, error) \
 { \
 	std::string fs[] = funcs; \
