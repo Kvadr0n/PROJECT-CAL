@@ -90,7 +90,7 @@ double gen::round(double x)
 
 short gen::order(double x)
 {
-	return(((((short*)(&x))[3] >> 4) & 0b0000011111111111) - 1023);
+	return(((((unsigned short*)(&x))[3] >> 4) & 0b0000011111111111) - 1023);
 }
 
 double gen::ipow(double x, short a)
