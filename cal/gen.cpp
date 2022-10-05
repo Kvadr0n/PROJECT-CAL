@@ -1,4 +1,5 @@
 #include "gen.h"
+typedef short smol;
 
 short gen::exput(double& x, short a)
 {
@@ -106,16 +107,18 @@ short gen::order(double x)
 
 double gen::ipow(double x, short a)
 {
-	uint64_t res = 1;
-	while (a)
-		if (a & 1) {
+	smol na = gen::abs(a);
+	double res = 1;
+	while (na)
+		if (na & 1) {
 			res *= x;
-			--a;
+			--na;
 		}
 		else {
 			x *= x;
-			a >>= 1;
+			na >>= 1;
 		}
+	if (a < 0) return 1 / res;
 	return res;
 }
 
