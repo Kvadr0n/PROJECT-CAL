@@ -1,4 +1,5 @@
 #include "gen.h"
+typedef short smol;
 
 short gen::exput(double& x, short a)
 {
@@ -106,7 +107,19 @@ short gen::order(double x)
 
 double gen::ipow(double x, short a)
 {
-	return 0.0;
+	smol na = gen::abs(a);
+	double res = 1;
+	while (na)
+		if (na & 1) {
+			res *= x;
+			--na;
+		}
+		else {
+			x *= x;
+			na >>= 1;
+		}
+	if (a < 0) return 1 / res;
+	return res;
 }
 
 std::string gen::bin(double x)
@@ -178,6 +191,6 @@ void gen::test()
 		//round
 		test1to1(round, ARR(0, 1, -31.1111, 800000.5, 0.8881111), ARR(0, 1, -31, 800001, 1));
 		//ipow
-		test2to1(ipow, ARR(0, 1, 10, 7, 5), ARR(50, 50, 7, 50, -6), ARR(0, 1, 10000000, 1.798465e42, 0.000064));
+		test2to1(ipow, ARR(0, 1, 10, 7, 5), ARR(50, 50, 7, 10, -6), ARR(0, 1, 10000000, 282475249, 0.000064));
 	}
 }

@@ -11,6 +11,7 @@ namespace calc
 	extern double pi;
 
 	double ln(double x);
+	void ln_22();
 	double log(double a, double x);
 	double exp(double x);
 	double pow(double x, double a);
