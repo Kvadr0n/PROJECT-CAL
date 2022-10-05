@@ -4,7 +4,8 @@ bool calc::negAllow = false;
 
 uint64_t calc::a = 0b0011111111100110001011100100001011111111001111110000101011010001;
 double calc::ln2 = *(double*)&a;
-double calc::e =   2.718281;
+uint64_t calc::b = 0b0100000000000101101111110000101010001011000101000101011101101010;
+double calc::e = *(double*)&b;
 double calc::pi =  3.141592;
 
 void calc::ln_22()
@@ -69,12 +70,28 @@ double calc::exp(double x)
             nx *= absx;
             now = nx / fact;
             sum += now;
-        } while (now >= std::numeric_limits<double>::epsilon());
+        } while (now >= 0.0000000000001);
         if(x > 0) return sum;
         return 1 / sum;
     }
     if (x > 0) return gen::ipow(e, gen::floor(absx)) * exp(gen::mant(absx));
     return 1 / gen::ipow(e, gen::floor(absx)) * exp(gen::mant(absx));
+}
+
+void calc::exp1()
+{
+        double fact = 1;
+        double nfact = 0;
+        double now;
+        double sum = 1;
+        do {
+            nfact++;
+            fact *= nfact;
+            now = 1 / fact;
+            sum += now;
+        } while (now >= std::numeric_limits<double>::epsilon());
+        std::cout << gen::bin(sum);
+
 }
 
 double calc::pow(double x, double a)
@@ -145,6 +162,7 @@ void calc::test()
 	//Тесты писать сюда
 	//Обратить внимание на макросы test1to1err и test2to1err в testmacros.h
     //ln
+    std::cout << e << '\n';
     test1to1err(ln, ARR(4, 0.5, e), ARR(1.38629, -0.69314, 1), 0.00001);
     test1to1err(exp, ARR(4, 0.5, e), ARR(54.59815, 1.648721, 15.154262), 0.0001);
     test2to1err(pow, ARR(0.5, -0.5, 10), ARR(0.5, 0.5, 2.31), ARR(0.70710, -0.70710, 204.173794), 0.001);
