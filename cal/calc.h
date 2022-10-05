@@ -9,6 +9,7 @@ namespace calc
 	extern double ln2;
 	extern double e;
 	extern double pi;
+	uint64_t a;
 
 	double ln(double x);
 	void ln_22();
