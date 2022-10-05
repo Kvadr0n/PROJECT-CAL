@@ -50,27 +50,53 @@ double calc::ln(double x)
 
 double calc::log(double a, double x)
 {
-    return 0.0;
+    return ln(x) / ln(a);
 }
 
 double calc::exp(double x)
 {
-    return 0.0;
+    double absx = gen::abs(x);
+    if (absx < 0.000000001) return 1;
+    if (absx < 1) {
+        double fact = 1;
+        double nfact = 0;
+        double nx = 1;
+        double now;
+        double sum = 1;
+        do {
+            nfact++;
+            fact *= nfact;
+            nx *= absx;
+            now = nx / fact;
+            sum += now;
+        } while (now >= std::numeric_limits<double>::epsilon());
+        if(x > 0) return sum;
+        return 1 / sum;
+    }
+    if (x > 0) return gen::ipow(e, gen::floor(absx)) * exp(gen::mant(absx));
+    return 1 / gen::ipow(e, gen::floor(absx)) * exp(gen::mant(absx));
 }
 
 double calc::pow(double x, double a)
 {
-    return 0.0;
+    bool negAllow = true;
+    if (!negAllow) {
+        if (x < 0 && gen::abs(gen::mant(a)) > 0.0000000001) throw OutOfDomain();
+    }else {
+        if (x < 0 && gen::abs(gen::mant(a)) > 0.0000000001) return -exp(a * ln(gen::abs(x)));
+    }
+    if (gen::mant(a) < 0.00000001) return gen::ipow(x, a);
+    return exp(a * ln(gen::abs(x)));
 }
 
 double calc::root(double a, double x)
 {
-    return 0.0;
+    return pow(x, 1 / a);
 }
 
 double calc::sqrt(double x)
 {
-    return 0.0;
+    return root(2, x);
 }
 
 double calc::arctg(double x)
@@ -120,5 +146,6 @@ void calc::test()
 	//Обратить внимание на макросы test1to1err и test2to1err в testmacros.h
     //ln
     test1to1err(ln, ARR(4, 0.5, e), ARR(1.38629, -0.69314, 1), 0.00001);
-
+    test1to1err(exp, ARR(4, 0.5, e), ARR(54.59815, 1.648721, 15.154262), 0.0001);
+    test2to1err(pow, ARR(0.5, -0.5, 10), ARR(0.5, 0.5, 2.31), ARR(0.70710, -0.70710, 204.173794), 0.001);
 }
