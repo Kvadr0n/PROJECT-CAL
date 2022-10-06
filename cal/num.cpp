@@ -77,7 +77,7 @@ double num::integrate(double a, double b)
 void num::test()
 {
     using namespace num;
-    std::cout << derive3(2.6);
-    //Тесты писать сюда
-    //Обратить внимание на макросы test1to1errfunc и test2to1errfunc в testmacros.h
+    test1to1err(derive, ARR(1, 2.6, 14.9), ARR(1.080604, -1.71378, -1.38194), 0.0001);
+    test1to1err(derive2, ARR(1.1, 2.6, 14.9), ARR(1.36269, -0.472273, -0.623859), 0.0001);
+    test1to1err(derive3, ARR(1.1, 2.6, 5.7), ARR(3.00417, 13.4637, 298.8674), 0.0001);
 }
