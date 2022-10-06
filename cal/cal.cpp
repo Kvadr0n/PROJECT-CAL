@@ -51,11 +51,11 @@ void parse(std::string com)
 
 int main()
 {
-	gen::test();
-	calc::test();
-	siaod::test();
+	//gen::test();
+	//calc::test();
+	//siaod::test();
 	num::test();
-	parsetest();
+	//parsetest();
 	system("pause");
 	return(0);
 }

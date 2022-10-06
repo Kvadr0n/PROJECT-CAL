@@ -1,4 +1,5 @@
 #include "gen.h"
+typedef short smol;
 
 short gen::exput(double& x, short a)
 {
@@ -58,34 +59,45 @@ double gen::x2(double x, short a)
 	return(x);
 }
 
-double gen::sgn(double x)
-{
-	return 0.0;
+double gen::sgn(double x){
+	if (x > 0) return 1;
+	if (x == 0) return 0;
+	return -1;
 }
 
-double gen::abs(double x)
-{
-	return 0.0;
+double gen::abs(double x){
+	return x * sgn(x);
 }
 
-double gen::floor(double x)
-{
-	return 0.0;
+double gen::floor(double x){
+	int temp = order(x);
+	if (temp > 51) return x;
+	if (temp < 0) return x < 0 ? -1 : 0;
+	uint64_t o = *(uint64_t*)(&x);
+	uint64_t mask = temp > 0 ? 0b0000000000001000000000000000000000000000000000000000000000000000 : 0b0000000000000000000000000000000000000000000000000000000000000000;
+	for (int i = 0; i < temp - 1; ++i) {
+		mask |= mask >> 1;
+	}
+	uint64_t t = (o & mask);
+	mask = 0b1111111111110000000000000000000000000000000000000000000000000000 & o;
+	uint64_t now = (t | mask);
+	if (x <= 0) return  *(double*)&now - 1;
+	return *(double*)&now;
 }
 
-double gen::mant(double x)
-{
-	return 0.0;
+double gen::mant(double x){
+	int now = x - floor(x);
+	if(x >= 0) return x - floor(x);
+	return x - floor(x) - 1;
 }
 
-double gen::ceil(double x)
-{
-	return 0.0;
+double gen::ceil(double x){
+	if (floor(x) == x) return x;
+	return floor(x) + 1;
 }
 
-double gen::round(double x)
-{
-	return 0.0;
+double gen::round(double x){
+	return floor(x + 0.5);
 }
 
 short gen::order(double x)
@@ -95,7 +107,20 @@ short gen::order(double x)
 
 double gen::ipow(double x, short a)
 {
-	return 0.0;
+	smol na = gen::abs(a);
+	double res = 1;
+	while (na)
+		if (na & 1) {
+			res *= x;
+			--na;
+		}
+		else {
+			x *= x;
+			na >>= 1;
+		}
+	if (x < 0 && (a & 1) == 1) res = -res;
+	if (a < 0) return 1 / res;
+	return res;
 }
 
 std::string gen::bin(double x)
@@ -129,7 +154,6 @@ void gen::test()
 	);
 	*/
 	//АНДРЕЙ - ТЕСТЫ БИНАРНЫХ ОПЕРАЦИЙ НАД ДАБЛАМИ
-	/*
 	test1to1(order, ARR(1, 1.5, 2, 0), ARR(0, 0, 1, -1023));
 	test2to1(exput, ARR(2, 32, -1.5, 0), ARR(5, 1, 1, 1024), ARR(4, -4, 1, 2047));
 	{
@@ -148,20 +172,26 @@ void gen::test()
 		test2to1(x2, ARR(2, 32, -2, -32, 0, -1.5, b1, b2, b3, b4, b5), ARR(4, -4, 4, -4, 1024, 1, 2, 54, -1, -1, -1), ARR(32, 2, -32, -2, 0, -3, b3, b0, b3, b4, b5));
 		//провал теста 11 - нормально, так как NaN != NaN по определению
 	}
-	//РОМАН тесты:
-	//sgn
-	test1to1(sgn, ARR(0, 1, -1, -550.12, 12345.6), ARR(0, 1, -1, -1, 1));
-	//abs
-	test1to1(abs, ARR(0, 1, -1, -550.12, 12345.6), ARR(0, 1, 1, 550.12, 12345.6));
-	//floor
-	test1to1(floor, ARR(0, 1, -31.1111, 800000.22948, 0.12345), ARR(0, 1, -31, 800000, 0));
-	//mant
-	test1to1(mant, ARR(0, 1, -31.1111, 800000.22948, 0.12345), ARR(0, 1, -0.1111, 0.22948, 0.12345));
-	//ceil
-	test1to1(ceil, ARR(0, 1, -31.1111, 800000.22948, 0.12345), ARR(0, 1, -32, 800000, 1));
-	//round
-	test1to1(round, ARR(0, 1, -31.1111, 800000.5, 0.8881111), ARR(0, 1, -31, 800001, 1));
-	//ipow
-	*/
-	//test2to1(ipow, ARR(2.5), ARR(3), ARR(15.625));
+	{
+			//РОМАН тесты:
+		//sgn
+		test1to1(sgn, ARR(0, 1, -1, -550.12, 12345.6), ARR(0, 1, -1, -1, 1));
+		//abs
+		test1to1(abs, ARR(0, 1, -1, -550.12, 12345.6), ARR(0, 1, 1, 550.12, 12345.6));
+		//floor
+		test1to1(floor, ARR(0, 1, -31.1111, 800000.22948, 0.12345, -0.123, 1.5), ARR(0, 1, -32, 800000, 0, -1, 1));
+		//mant
+		union { unsigned long long a0 = 0xC037C00000000000; double d0; };//-23.75
+		union { unsigned long long a1 = 0x41286A02C0000000; double d1; };//800001.375
+		union { unsigned long long a2 = 0xBFE8000000000000; double d2; };//-0.75
+		union { unsigned long long a3 = 0x3FD8000000000000; double d3; };//0.375
+		
+		test1to1(mant, ARR(0, 1, d0, d1, 0.12345), ARR(0, 0, d2, d3, 0.12345));
+		//ceil
+		test1to1(ceil, ARR(0, 1, -31.1111, 800000.22948, 0.12345), ARR(0, 1, -31, 800001, 1));
+		//round
+		test1to1(round, ARR(0, 1, -31.1111, 800000.5, 0.8881111), ARR(0, 1, -31, 800001, 1));
+		//ipow
+		test2to1(ipow, ARR(0, 1, 10, 7, 5), ARR(50, 50, 7, 10, -6), ARR(0, 1, 10000000, 282475249, 0.000064));
+	}
 }
