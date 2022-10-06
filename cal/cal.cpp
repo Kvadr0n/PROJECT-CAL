@@ -48,6 +48,7 @@ void parse(std::string com)
 }
 
 
+
 int main()
 {
 	gen::test();
