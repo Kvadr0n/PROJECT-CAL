@@ -219,12 +219,12 @@ double calc::cos(double x)
 
 double calc::tg(double x)
 {
-    return 0.0;
+    return sin(x) / cos(x);
 }
 
 double calc::ctg(double x)
 {
-    return 0.0;
+    return cos(x) / sin(x);
 }
 
 void calc::test()
@@ -234,8 +234,11 @@ void calc::test()
 	//Обратить внимание на макросы test1to1err и test2to1err в testmacros.h
     //ln
     test1to1err(ln, ARR(4, 0.5, e), ARR(1.38629, -0.69314, 1), 0.00001);
+    test2to1err(log, ARR(2, 0.5, 3.67), ARR(8, 8, 78.1222), ARR(3, -3, 3.35202447), 0.00001);
     test1to1err(exp, ARR(4, 0.5, e), ARR(54.59815, 1.648721, 15.154262), 0.0001);
     test2to1err(pow, ARR(0.5, -0.5, 10), ARR(0.5, 0.5, 2.31), ARR(0.70710, -0.70710, 204.173794), 0.001);
+    test2to1err(root, ARR(3, 0.5, 10), ARR(2, 5, 7.8), ARR(1.259921, 25, 1.228), 0.001);
+    test1to1err(arctg, ARR(pi, pi / 4, pi + pi / 6, 100), ARR(1.26262, 0.665773, 1.3044421, 1.560796), 0.0001)
     test1to1err(sin, ARR(pi/6, pi/4, pi+pi/6, 10), ARR(0.5, 0.7071067, -0.5, -0.54402111088), 0.0001)
     test1to1err(cos, ARR(pi / 6, pi / 4, pi + pi / 6, 10), ARR(0.866025, 0.707106, -0.866025, -0.83907152), 0.0001)
 }
