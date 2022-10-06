@@ -11,6 +11,7 @@ namespace calc
 	extern double pi;
 	extern uint64_t a;
 	extern uint64_t b;
+	extern uint64_t c;
 
 	double ln(double x);
 	void ln_22();
@@ -21,6 +22,7 @@ namespace calc
 	double root(double a, double x);
 	double sqrt(double x);
 	double arctg(double x);
+	void arctg1();
 	double arcctg(double x);
 	double arcsin(double x);
 	double arccos(double x);
