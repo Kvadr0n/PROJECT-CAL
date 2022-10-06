@@ -118,6 +118,7 @@ double gen::ipow(double x, short a)
 			x *= x;
 			na >>= 1;
 		}
+	if (x < 0 && (a & 1) == 1) res = -res;
 	if (a < 0) return 1 / res;
 	return res;
 }
